@@ -1,0 +1,19 @@
+FROM node:6.16.0-alpine as dependencies
+
+COPY package.json  .
+RUN npm install 
+
+FROM node:6.16.0-alpine
+
+LABEL org.label-schema.schema-version="1.0"
+LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_timeoff"
+
+RUN adduser --system app --home /app
+USER app
+WORKDIR /app
+COPY . /app
+COPY --from=dependencies node_modules ./node_modules
+
+CMD npm start
+
+EXPOSE 3000

@@ -16,8 +16,14 @@
 # --------------------------------------------------------------------
 FROM alpine:latest as dependencies
 
-RUN apk add --no-cache \
-    nodejs npm 
+RUN apk add --no-cache nodejs npm build-base python3
+
+#RUN wget https://www.python.org/ftp/python/2.7.16/Python-2.7.16.tar.xz \
+#    && tar -xf Python-2.7.16.tar.xz \
+#    && cd Python-2.7.16 \
+#    && ./configure \
+#    && make altinstall \
+#    && make install
 
 COPY package.json  .
 RUN npm install 
